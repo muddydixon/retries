@@ -10,7 +10,8 @@ describe "retries", ->
         done(null, "success")
       , 100)
 
-    retry(success).then((data)->
+    myret = retry(success)
+    myret().then((data)->
       expect(data).to.be.equal "success"
       next()
     , (err)->
@@ -23,7 +24,8 @@ describe "retries", ->
         done new Error("fail")
       , 100
 
-    retry(fail).then(()->
+    myret = retry(fail)
+    myret().then(()->
         next(new Error("should be error"))
       , (err)->
         expect(err).to.be.an.instanceof Error
@@ -36,7 +38,8 @@ describe "retries", ->
         done new Error("fail")
       , 100
 
-    retry(fail, 3).then(()->
+    myret = retry(fail, 3)
+    myret().then(()->
         next(new Error("should be error"))
       , (err)->
         expect(err).to.be.an.instanceof Error
@@ -49,9 +52,27 @@ describe "retries", ->
         done new Error("fail")
       , 100
 
-    retry(fail, 3, 1500).then(()->
+    myret = retry(fail, 3, 1500)
+    myret().then(()->
         next(new Error("should be error"))
       , (err)->
         expect(err).to.be.an.instanceof Error
         expect(err.retries.count).to.be.equal 3
         next())
+
+  it "force stop", (next)->
+    fail = (done)->
+      setTimeout ()->
+        done new Error("fail")
+      , 100
+
+    myret = retry(fail, 3, 1500)
+    myret().then(()->
+      next(new Error("should be error"))
+    , (err)->
+      expect(err).to.be.an.instanceof Error
+      next())
+
+    setTimeout ()->
+      myret.fail(new Error("force stop"))
+    , 2000
