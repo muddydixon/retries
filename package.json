@@ -1,6 +1,6 @@
 {
   "name": "retries",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Simple Retry framework with deferred.",
   "main": "lib/retries.js",
   "scripts": {
