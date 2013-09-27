@@ -19,13 +19,29 @@ var someFunction = (done)->
 var retries = 5;     // times
 var interval = 1000; // msecond
 
-retry(someFunction, retries, interval).then(function(data){
+var myretry = retry(someFunction, retries, interval)
+myretry().then(function(data){
   console.log(data);
   // do next
 }, function(err){
   console.log(err); // err.count = 5
   process.exit(-1);
 });
+
+// if you want to fail forcely
+
+var myretry = retry(someFunction, retries, interval)
+myretry().then(function(data){
+  console.log(data);
+  // do next
+}, function(err){
+  if(someCondition){
+    myretry.fail(new Error('forcely stop'));
+  }
+  console.log(err); // err.count = 5
+  process.exit(-1);
+});
+
 ```
 
 if `retries` and `interval` omitted, they are set 5 and 1000 msec in default.
