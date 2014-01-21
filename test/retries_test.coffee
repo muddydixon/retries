@@ -1,6 +1,6 @@
 mocha = require 'mocha'
 expect = require('chai').expect
-retry = require '../src/retries'
+Retry = require '../src/retries'
 
 
 describe "retries", ->
@@ -10,8 +10,8 @@ describe "retries", ->
         done(null, "success")
       , 100)
 
-    myret = retry(success)
-    myret().then((data)->
+    retry = Retry(success)
+    retry().then((data)->
       expect(data).to.be.equal "success"
       next()
     , (err)->
@@ -24,8 +24,8 @@ describe "retries", ->
         done new Error("fail")
       , 100
 
-    myret = retry(fail)
-    myret().then(()->
+    retry = Retry(fail)
+    retry().then(()->
         next(new Error("should be error"))
       , (err)->
         expect(err).to.be.an.instanceof Error
@@ -38,8 +38,8 @@ describe "retries", ->
         done new Error("fail")
       , 100
 
-    myret = retry(fail, 3)
-    myret().then(()->
+    retry = Retry(fail, 3)
+    retry().then(()->
         next(new Error("should be error"))
       , (err)->
         expect(err).to.be.an.instanceof Error
@@ -52,8 +52,8 @@ describe "retries", ->
         done new Error("fail")
       , 100
 
-    myret = retry(fail, 3, 1500)
-    myret().then(()->
+    retry = Retry(fail, 3, 1500)
+    retry().then(()->
         next(new Error("should be error"))
       , (err)->
         expect(err).to.be.an.instanceof Error
@@ -66,13 +66,13 @@ describe "retries", ->
         done new Error("fail")
       , 100
 
-    myret = retry(fail, 3, 1500)
-    myret().then(()->
+    retry = Retry(fail, 3, 1500)
+    retry().then(()->
       next(new Error("should be error"))
     , (err)->
       expect(err).to.be.an.instanceof Error
       next())
 
     setTimeout ()->
-      myret.fail(new Error("force stop"))
+      retry.fail(new Error("force stop"))
     , 2000

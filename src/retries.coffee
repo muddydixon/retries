@@ -1,18 +1,19 @@
 deferred = require 'deferred'
 
-retry = (func, retries = 5, interval = 1000)->
+retry = (func, times = 5, interval = 1000)->
   d = deferred()
+  count = 0
+
   _retry = ()->
-    d.count = 0
     done = (err, data)->
       if err?
-        if d.count++ < retries
+        if count++ < times
           return setTimeout ()->
             func(done)
           , interval
         else
           err.retries =
-            count: d.count - 1
+            count: count - 1
           return d.reject(err)
       d.resolve(data)
     func(done)
