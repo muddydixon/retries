@@ -4,39 +4,41 @@ Retries
 
 Simple Retry framework with deferred.
 
-```
-var retry = require("retries");
-var someFunction = (done)->
+```javascript
+var Retry = require("retries");
+var someFunction = function(done){
   // ... processes line get html, select databases, and so on
 
   if(success){
     done(null, data);
-  else{
+  }else{
     done(new Error("error"));
   }
-}
+};
 
-var retries = 5;     // times
+var times = 5;       // retry times
 var interval = 1000; // msecond
 
-var myretry = retry(someFunction, retries, interval)
-myretry().then(function(data){
+var retry = Retry(someFunction, times, interval);
+retry().then(function(data){
   console.log(data);
   // do next
 }, function(err){
   console.log(err); // err.count = 5
   process.exit(-1);
 });
+```
 
-// if you want to fail forcely
+If you want to fail forcely
 
-var myretry = retry(someFunction, retries, interval)
-myretry().then(function(data){
+```javascript
+var retry = Retry(someFunction, times, interval);
+retry().then(function(data){
   console.log(data);
   // do next
 }, function(err){
   if(someCondition){
-    myretry.fail(new Error('forcely stop'));
+    retry.fail(new Error('forcely stop'));
   }
   console.log(err); // err.count = 5
   process.exit(-1);
@@ -44,4 +46,4 @@ myretry().then(function(data){
 
 ```
 
-if `retries` and `interval` omitted, they are set 5 and 1000 msec in default.
+if `times` and `interval` omitted, they are set 5 and 1000 msec in default.
