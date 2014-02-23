@@ -2,3 +2,7 @@ image: dockerfile/nodejs
 script:
   - npm install
   - npm test
+notify:
+  email:
+    recipients:
+      - muddydixon@gmail.com
