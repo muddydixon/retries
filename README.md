@@ -47,3 +47,7 @@ retry().then(function(data){
 ```
 
 if `times` and `interval` omitted, they are set 5 and 1000 msec in default.
+
+# LICENSE
+
+Apache License Version 2.0
