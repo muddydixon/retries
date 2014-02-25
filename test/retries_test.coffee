@@ -76,3 +76,17 @@ describe "retries", ->
     setTimeout ()->
       retry.fail(new Error("force stop"))
     , 2000
+
+  it "wait status ready", (next)->
+    readyornot = (num)->
+      return (done)->
+        setTimeout ()->
+          if num is 0
+            return done null, {status: num, data: "say ho"}
+          return done {status: num--}
+        , 500
+
+    retry = Retry(readyornot(3), 5, 300)
+    retry().then (data)->
+      next()
+    , next
