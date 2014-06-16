@@ -1,4 +1,4 @@
-Retries
+Retries [![Build Status](https://travis-ci.org/muddydixon/retries.svg?branch=master)](https://travis-ci.org/muddydixon/retries)
 
 ====================
 
