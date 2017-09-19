@@ -1,24 +1,16 @@
 {
   "name": "retries",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Simple Retry framework with deferred.",
   "main": "lib/retries.js",
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script -R spec -t 10000 ./test/*_test.coffee"
+    "test": "mocha -R list -t 20000 ./test/*_test.js"
   },
   "repository": "",
   "author": "muddydixon<muddydixon@gmail.com>",
-  "license": "Apache License Version 2.0",
-  "dependencies": {
-    "deferred": "~0.7.1"
-  },
+  "license": "Apache-2.0",
+  "dependencies": {},
   "devDependencies": {
-    "chai": "~1.8.0",
-    "mocha": "~1.13.0",
-    "coffee-script": "~1.6.3",
-    "grunt-simple-mocha": "~0.4.0",
-    "grunt-contrib-coffee": "~0.7.0",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt": "~0.4.1"
+    "mocha": "^3.5.3"
   }
 }
