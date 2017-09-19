@@ -1,5 +1,4 @@
 language: node_js
 node_js:
-  - v0.10
-  - v0.11
-
+  - v8.4
+  - v8.5
